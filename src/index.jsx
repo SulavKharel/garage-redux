@@ -7,10 +7,15 @@ import logger from 'redux-logger';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createHistory as history } from 'history';
 
+import CarsIndex from './containers/cars_index';
+import CarsNew from './containers/cars_new';
+
 import '../assets/stylesheets/application.scss';
+import carsReducer from './reducers/cars_reducer';
 
 const reducers = combineReducers({
   // key: reducer
+  cars: carsReducer
 });
 
 const middlewares = applyMiddleware(reduxPromise, logger);
@@ -19,9 +24,12 @@ const middlewares = applyMiddleware(reduxPromise, logger);
 ReactDOM.render(
   <Provider store={createStore(reducers, {}, middlewares)}>
     <Router history={history}>
-      <Switch>
-        TODO
-      </Switch>
+      <div className="view-container">
+        <Switch>
+          <Route path="/" exact component={CarsIndex} />
+          <Route path="/cars/new" exact component={CarsNew} />
+        </Switch>
+      </div>
     </Router>
   </Provider>,
   document.getElementById('root')
